@@ -9,7 +9,8 @@
     "test": "jest",
     "migration": "node node_modules/typeorm/cli.js migration:run",
     "server": "node node_modules/.bin/pm2 start dist/index.js --name ljrp",
-    "stop": "node node_modules/.bin/pm2 stop ljrp"
+    "stop": "node node_modules/.bin/pm2 stop ljrp",
+    "schemas": "node dist/support/schema-to-dto.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "@types/node": "^12.12.24",
     "@types/qrcode": "^1.3.4",
     "@types/speakeasy": "^2.0.5",
+    "json-schema-to-typescript": "^8.2.0",
     "tsc-watch": "^4.2.3",
     "tslint": "^5.20.0",
     "typescript": "^3.8.3"
