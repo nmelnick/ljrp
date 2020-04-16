@@ -2,6 +2,7 @@ import { Server } from "@overnightjs/core";
 import { Logger } from "@overnightjs/logger";
 import * as bodyParser from "body-parser";
 import * as promiseRouter from "express-promise-router";
+import { AuthController } from "./controller/AuthController";
 import { UpController } from "./controller/UpController";
 import { Connection } from "typeorm";
 
@@ -31,6 +32,7 @@ export class LJRPServer extends Server {
 
     private setupControllers(connection: Connection): void {
         const upController = new UpController(connection);
-        super.addControllers([upController, promiseRouter]);
+        const authController = new AuthController(connection);
+        super.addControllers([upController, authController, promiseRouter]);
     }
 }

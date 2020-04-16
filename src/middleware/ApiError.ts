@@ -1,5 +1,7 @@
 import { Request, NextFunction, Response } from "express";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "http-status-codes";
+import { ValidationError } from "express-json-validator-middleware";
+import { ErrorObject } from "ajv";
 
 /**
  * An ErrorMiddleware to convert an error string or Error object into a JSON
@@ -9,30 +11,38 @@ export function apiError(err: any, req: Request, res: Response, next: NextFuncti
     if (res.headersSent) {
         return next(err);
     }
-    let message = "";
+    let e = error("");
     if (typeof(err) == "string") {
-        message = err;
+        e = error(err);
+
+    // Handle JSON schema validation errors
+    } else if (err instanceof ValidationError) {
+        // Hmm, the type does not match what the value looks like
+        const hmm = ((err as ValidationError).validationErrors.body as unknown) as ErrorObject[];
+        e = error(hmm.map((eo) => eo.message));
+
+    // Roll up an Error message
     } else {
-        message = (err as Error).message;
+        e = error((err as Error).message);
     }
-    if (message.match("not found")) {
+    if (e.errors[0].match("not found")) {
         res.status(NOT_FOUND);
     } else {
         res.status(INTERNAL_SERVER_ERROR);
     }
-    res.send(JSON.stringify(error(message)));
+    res.send(JSON.stringify(e));
 }
 
 /**
  * Take a given string and return an ApiError object.
  * @param str Error string
  */
-function error(str: string): ApiError {
+function error(str: string | string[]): ApiError {
     return {
-        error: str
+        errors: (typeof(str) === "string" ? [str] : str)
     };
 }
 
 export class ApiError {
-    error: string
+    errors: string[]
 }
