@@ -4,8 +4,8 @@
   "description": "ljrp",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node node_modules/.bin/tsc-watch --onSuccess \"node --inspect=5858 dist/index.js\"",
+    "build": "node node_modules/typescript/bin/tsc",
+    "start": "node node_modules/tsc-watch/index.js --onSuccess \"node --inspect=5858 dist/index.js\"",
     "test": "jest",
     "migration": "node node_modules/typeorm/cli.js migration:run",
     "server": "node node_modules/.bin/pm2 start dist/index.js --name ljrp",
