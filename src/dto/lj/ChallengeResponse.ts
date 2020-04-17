@@ -1,5 +1,5 @@
 /**
- * get_challenge response
+ * getchallenge response
  */
 export interface ChallengeResponse {
     challenge: string;

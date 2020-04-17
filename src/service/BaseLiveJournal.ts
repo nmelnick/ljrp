@@ -1,5 +1,7 @@
 import * as xmlrpc from "xmlrpc";
 import { ChallengeResponse } from "../dto/lj/ChallengeResponse";
+import { LoginRequest } from "../dto/lj/LoginRequest";
+import { LoginResponse } from "../dto/lj/LoginResponse";
 
 export abstract class BaseLiveJournal {
     protected _client: xmlrpc.Client;
@@ -44,5 +46,20 @@ export abstract class BaseLiveJournal {
      */
     public async getChallenge(): Promise<ChallengeResponse> {
         return await this.methodCall("getchallenge");
+    }
+
+    /**
+     * Validate user's password and get base information needed for client to
+     * function.
+     * 
+     * Login to the server, while announcing your client version. The server
+     * returns with whether the password is good or not, the user's name, an
+     * optional message to be displayed to the user, the list of the user's
+     * friend groups, and other things. 
+     * 
+     * https://www.livejournal.com/doc/server/ljp.csp.xml-rpc.login.html
+     */
+    public async login(request: LoginRequest): Promise<LoginResponse> {
+        return await this.methodCall("login", [request]);
     }
 }
