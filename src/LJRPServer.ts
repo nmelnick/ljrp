@@ -5,12 +5,11 @@ import * as promiseRouter from "express-promise-router";
 import { AuthController } from "./controller/AuthController";
 import { UpController } from "./controller/UpController";
 import { Connection } from "typeorm";
+import { injectConnection } from "./middleware/ConnectionInjector";
 
 const inflector = require("json-inflector");
 
 export class LJRPServer extends Server {
-    // Not a fan here.
-    public static connection: Connection;
 
     constructor(connection: Connection) {
         super(process.env.NODE_ENV === "development");
@@ -20,7 +19,6 @@ export class LJRPServer extends Server {
             request: 'camelizeLower',
             response: 'underscore'
         }));
-        LJRPServer.connection = connection;
         this.setupControllers(connection);
     }
 
@@ -33,6 +31,6 @@ export class LJRPServer extends Server {
     private setupControllers(connection: Connection): void {
         const upController = new UpController(connection);
         const authController = new AuthController(connection);
-        super.addControllers([upController, authController, promiseRouter]);
+        super.addControllers([upController, authController, promiseRouter], null, injectConnection(connection));
     }
 }

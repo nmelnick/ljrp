@@ -1,4 +1,4 @@
-import { Controller, Put, ClassMiddleware, ClassErrorMiddleware, Middleware } from "@overnightjs/core";
+import { Controller, Post, ClassMiddleware, ClassErrorMiddleware, Middleware } from "@overnightjs/core";
 import { Request, Response } from "express";
 import { OK } from "http-status-codes";
 import { apiError } from "../middleware/ApiError";
@@ -6,6 +6,7 @@ import { requestLogger } from "../middleware/RequestLogger";
 import { Connection } from "typeorm";
 import { AuthRequest } from "../dto/AuthRequest";
 import { validators } from "../Schema";
+import { temporaryAuthorization } from "../middleware/TemporaryAuthorization";
 
 @Controller("auth")
 @ClassMiddleware([requestLogger])
@@ -17,8 +18,8 @@ export class AuthController {
         this.connection = connection;
     }
 
-    @Put()
-    @Middleware(validators.authRequest())
+    @Post()
+    @Middleware([temporaryAuthorization, validators.authRequest()])
     public async auth(req: Request, res: Response): Promise<Response> {
         const authRequest: AuthRequest = req.body;
         return res.status(OK).send("OK");

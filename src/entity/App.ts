@@ -6,7 +6,7 @@ export class App {
     public appId: string;
 
     @Column()
-    public appKey: string;
+    public apiKey: string;
 
     @Column()
     public name: string;
