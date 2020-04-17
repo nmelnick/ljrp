@@ -21,6 +21,7 @@
     "@types/node": "^12.12.24",
     "@types/qrcode": "^1.3.4",
     "@types/speakeasy": "^2.0.5",
+    "@types/xmlrpc": "^1.3.5",
     "json-schema-to-typescript": "^8.2.0",
     "tsc-watch": "^4.2.3",
     "tslint": "^5.20.0",
@@ -43,6 +44,7 @@
     "sodium": "^3.0.2",
     "speakeasy": "^2.0.0",
     "typeorm": "^0.2.19",
-    "typeorm-naming-strategies": "^1.1.0"
+    "typeorm-naming-strategies": "^1.1.0",
+    "xmlrpc": "^1.3.2"
   }
 }
