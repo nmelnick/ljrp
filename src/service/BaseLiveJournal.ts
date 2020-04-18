@@ -2,8 +2,11 @@ import * as xmlrpc from "xmlrpc";
 import { ChallengeResponse } from "../dto/lj/ChallengeResponse";
 import { LoginRequest } from "../dto/lj/LoginRequest";
 import { LoginResponse } from "../dto/lj/LoginResponse";
+import { BaseRequest } from "../dto/lj/IBaseRequest";
+import * as RequestUtil from "./RequestUtil";
 
 export abstract class BaseLiveJournal {
+    protected hashed: string;
     protected _client: xmlrpc.Client;
 
     protected abstract getUrl(): string;
@@ -61,5 +64,13 @@ export abstract class BaseLiveJournal {
      */
     public async login(request: LoginRequest): Promise<LoginResponse> {
         return await this.methodCall("login", [request]);
+    }
+
+    /**
+     * Generate the base request for most XML-RPC calls, to be built upon for
+     * creating a complete request.
+     */
+    public async generateBaseRequest(): Promise<BaseRequest> {
+        return RequestUtil.generateBaseRequest(this.hashed, this);
     }
 }

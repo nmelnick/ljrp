@@ -1,5 +1,4 @@
 import { Controller, Post, ClassMiddleware, ClassErrorMiddleware, Middleware } from "@overnightjs/core";
-import { createHash } from "crypto";
 import { Request, Response } from "express";
 import { OK } from "http-status-codes";
 import { apiError } from "../middleware/ApiError";
@@ -9,8 +8,7 @@ import { AuthRequest } from "../dto/AuthRequest";
 import { validators } from "../Schema";
 import { temporaryAuthorization } from "../middleware/TemporaryAuthorization";
 import { LiveJournal } from "../service/LiveJournal";
-import { generateBaseRequest } from "../service/RequestUtil";
-import { LoginRequest } from "../dto/lj/LoginRequest";
+import { DtoFactory } from "../dto/DtoFactory";
 
 @Controller("auth")
 @ClassMiddleware([requestLogger])
@@ -26,19 +24,12 @@ export class AuthController {
     @Middleware([temporaryAuthorization, validators.authRequest()])
     public async auth(req: Request, res: Response): Promise<Response> {
         const authRequest: AuthRequest = req.body;
-        const lj = new LiveJournal();
-        const hashed = createHash('md5').update(authRequest.password).digest("hex");
-        const request: LoginRequest = Object.assign(
-            await generateBaseRequest(hashed, lj),
-            {
-                username: authRequest.username,
-                getmoods: (authRequest.last_mood_id || null),
-                getpickws: (authRequest.get_picture_keywords ? "1" : "0"),
-                getpickwurls: (authRequest.get_picture_urls ? "1" : "0")
-            }
+        const lj = new LiveJournal(authRequest.username, authRequest.password);
+        const request = DtoFactory.loginRequest(
+            await lj.generateBaseRequest(),
+            authRequest
         );
         const response = await lj.login(request);
-        console.log(response);
-        return res.status(OK).send("OK");
+        return res.status(OK).send(DtoFactory.authResponse(response));
     }
 }

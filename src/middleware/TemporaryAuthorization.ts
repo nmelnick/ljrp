@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { Logger } from "@overnightjs/logger";
 import { App } from "../entity/App";
 import { Connection } from "typeorm";
 
