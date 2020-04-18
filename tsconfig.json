@@ -20,8 +20,5 @@
     "exclude": [
         "node_modules",
         "__tests__"
-    ],
-    "files": [
-        "typings/express.d.ts"
     ]
 }
