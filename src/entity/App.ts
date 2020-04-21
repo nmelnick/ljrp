@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryColumn, BeforeUpdate} from "typeorm";
+import {Column, Entity, PrimaryColumn, BeforeUpdate, CreateDateColumn, UpdateDateColumn} from "typeorm";
 
 @Entity()
 export class App {
@@ -11,14 +11,10 @@ export class App {
     @Column()
     public name: string;
 
-    @Column()
+    @CreateDateColumn()
     public dateCreated: Date;
 
-    @Column()
+    @UpdateDateColumn()
     public dateModified: Date;
 
-    @BeforeUpdate()
-    private updateModified() {
-        this.dateModified = new Date();
-    }
 }

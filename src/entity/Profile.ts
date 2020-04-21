@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, PrimaryGeneratedColumn, CreateDateColumn} from "typeorm";
 
 @Entity()
 export class Profile {
@@ -8,6 +8,6 @@ export class Profile {
     @Column()
     public name: string;
 
-    @Column()
+    @CreateDateColumn()
     public dateCreated: Date;
 }

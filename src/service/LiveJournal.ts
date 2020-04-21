@@ -1,5 +1,4 @@
 import { BaseLiveJournal } from "./BaseLiveJournal";
-import { createHash } from "crypto";
 
 export class LiveJournal extends BaseLiveJournal {
     private defaultUrl: string = "http://www.livejournal.com/interface/xmlrpc";
@@ -8,8 +7,9 @@ export class LiveJournal extends BaseLiveJournal {
         return this.defaultUrl;
     }
 
-    constructor(username: string, password: string) {
+    constructor(baseUrl: string, username: string, hashed: string) {
         super();
-        this.hashed = createHash('md5').update(password).digest("hex");
+        this.defaultUrl = baseUrl;
+        this.hashed = hashed;
     }
 }
