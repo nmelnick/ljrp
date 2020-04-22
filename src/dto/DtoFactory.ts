@@ -3,6 +3,10 @@ import { LoginRequest } from "./lj/LoginRequest";
 import { BaseRequest } from "./lj/IBaseRequest";
 import { LoginResponse } from "./lj/LoginResponse";
 import { AuthResponse } from "./AuthResponse";
+import { FriendsCheckRequest } from "./FriendsCheckRequest";
+import { CheckFriendsRequest } from "./lj/CheckFriendsRequest";
+import { CheckFriendsResponse } from "./lj/CheckFriendsResponse";
+import { FriendsCheckResponse } from "./FriendsCheckResponse";
 
 export class DtoFactory {
     public static loginRequest(baseRequest: BaseRequest, authRequest: AuthRequest): LoginRequest {
@@ -13,6 +17,18 @@ export class DtoFactory {
             getpickws: (authRequest.get_picture_keywords ? "1" : "0"),
             getpickwurls: (authRequest.get_picture_urls ? "1" : "0")
         };
+    }
+    
+    public static checkFriendsRequest(baseRequest: BaseRequest, friendsCheckRequest: FriendsCheckRequest): CheckFriendsRequest {
+        return {
+            ...baseRequest,
+            lastupdate: (friendsCheckRequest.last_update || ""),
+            mask: (friendsCheckRequest.mask || 0)
+        };
+    }
+
+    public static friendsCheckResponse(checkFriendsResponse: CheckFriendsResponse): FriendsCheckResponse {
+        return checkFriendsResponse;
     }
 
     public static authResponse(loginResponse: LoginResponse): AuthResponse {

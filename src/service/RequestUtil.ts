@@ -12,8 +12,8 @@ type BaseRequest = IWithRequired & IWithChallenge;
  * @param hashedPassword User password, in MD5 hex
  * @param lj Instance of a BaseLiveJournal implementation
  */
-export async function generateBaseRequest(hashedPassword: string, lj: BaseLiveJournal): Promise<BaseRequest> {
-    const challenge = await generateChallenge(hashedPassword, lj);
+export async function generateBaseRequest(username: string, hashedPassword: string, lj: BaseLiveJournal): Promise<BaseRequest> {
+    const challenge = await generateChallenge(username, hashedPassword, lj);
     return {...generateRequiredRequest(), ...challenge};
 }
 
@@ -24,13 +24,14 @@ function generateRequiredRequest(): IWithRequired {
     };
 }
 
-async function generateChallenge(hashedPassword: string, lj: BaseLiveJournal): Promise<IWithChallenge> {
+async function generateChallenge(username: string, hashedPassword: string, lj: BaseLiveJournal): Promise<IWithChallenge> {
     const r = await lj.getChallenge();
     const challenge = r.challenge;
     const response = createHash('md5').update(challenge + hashedPassword).digest("hex");
     return {
         auth_method: "challenge",
         auth_challenge: challenge,
-        auth_response: response
+        auth_response: response,
+        username: username
     }
 }

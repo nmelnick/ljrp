@@ -1,0 +1,24 @@
+{
+  "$id": "https://github.com/nmelnick/ljrp/doc/FriendsCheckResponse.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FriendsCheckResponse",
+  "type": "object",
+  "properties": {
+    "new": {
+      "type": "boolean",
+      "description": "True if there are new items"
+    },
+    "interval": {
+      "type": "number",
+      "description": "How many seconds you must wait before polling the server again"
+    },
+    "count": {
+      "type": "number",
+      "description": "The number of items that are contained in this response (numbered started at 1)"
+    },
+    "total": {
+      "type": "number",
+      "description": "The total number of items that have been updated since the time specified"
+    }
+  }
+}

@@ -17,13 +17,13 @@ class TestLiveJournal extends BaseLiveJournal {
 }
 
 test("generateBaseRequest provides a ver and a clientversion", async () => {
-    const req = await RequestUtil.generateBaseRequest("abc123", new TestLiveJournal());
+    const req = await RequestUtil.generateBaseRequest("123abc", "abc123", new TestLiveJournal());
     expect(req.ver).toEqual(1);
     expect(req.clientversion).toBeDefined();
 });
 
 test("generateBaseRequest provides an auth_challenge and auth_response", async () => {
-    const req = await RequestUtil.generateBaseRequest("abc123", new TestLiveJournal());
+    const req = await RequestUtil.generateBaseRequest("123abc", "abc123", new TestLiveJournal());
     expect(req.auth_challenge).toEqual("testchallenge");
     expect(req.auth_response).toBeDefined();
 });

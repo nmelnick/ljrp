@@ -4,8 +4,11 @@ import { LoginRequest } from "../dto/lj/LoginRequest";
 import { LoginResponse } from "../dto/lj/LoginResponse";
 import { BaseRequest } from "../dto/lj/IBaseRequest";
 import * as RequestUtil from "./RequestUtil";
+import { CheckFriendsRequest } from "../dto/lj/CheckFriendsRequest";
+import { CheckFriendsResponse } from "../dto/lj/CheckFriendsResponse";
 
 export abstract class BaseLiveJournal {
+    protected username: string;
     protected hashed: string;
     protected _client: xmlrpc.Client;
 
@@ -67,10 +70,28 @@ export abstract class BaseLiveJournal {
     }
 
     /**
+     * Checks to see if your Friends list has been updated since a specified
+     * time.
+     * 
+     * Mode that clients can use to poll the server to see if their Friends
+     * list has been updated. This request is extremely quick, and is the
+     * preferred way for users to see when their Friends list is updated,
+     * rather than pounding on reload in their browser, which is stressful on
+     * the servers.
+     * 
+     * https://www.livejournal.com/doc/server/ljp.csp.xml-rpc.checkfriends.html
+     * 
+     * @param request A [[CheckFriendsRequest]] instance
+     */
+    public async checkFriends(request: CheckFriendsRequest): Promise<CheckFriendsResponse> {
+        return await this.methodCall("checkfriends", [request]);
+    }
+
+    /**
      * Generate the base request for most XML-RPC calls, to be built upon for
      * creating a complete request.
      */
     public async generateBaseRequest(): Promise<BaseRequest> {
-        return RequestUtil.generateBaseRequest(this.hashed, this);
+        return RequestUtil.generateBaseRequest(this.username, this.hashed, this);
     }
 }

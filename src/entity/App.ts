@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryColumn, BeforeUpdate, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import {Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
+import * as jwt from "jsonwebtoken";
 
 @Entity()
 export class App {
@@ -17,4 +18,13 @@ export class App {
     @UpdateDateColumn()
     public dateModified: Date;
 
+    public signJwt(id: string): string {
+        return jwt.sign(
+            {
+                expiresIn: 3600,
+                sid: id
+            },
+            this.apiKey
+        );
+    }
 }

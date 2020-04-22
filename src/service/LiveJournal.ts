@@ -10,6 +10,7 @@ export class LiveJournal extends BaseLiveJournal {
     constructor(baseUrl: string, username: string, hashed: string) {
         super();
         this.defaultUrl = baseUrl;
+        this.username = username;
         this.hashed = hashed;
     }
 }

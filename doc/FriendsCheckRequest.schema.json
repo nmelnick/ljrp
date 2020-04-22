@@ -1,0 +1,16 @@
+{
+  "$id": "https://github.com/nmelnick/ljrp/doc/FriendsCheckRequest.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FriendsCheckRequest",
+  "type": "object",
+  "properties": {
+    "last_update": {
+      "type": "string",
+      "description": "The time that this mode request returned last time you called it. If this is the first time you've ever called it (since your client has been running), leave this blank. It's strongly recommended that you do not remember this value across invocations of your client, as it's very likely your friends will update since the client was running so the notification is pointless... the user probably read his/her Friends page already before starting the client."
+    },
+    "mask": {
+      "type": "number",
+      "description": "The friend group(s) in which the client is checking for new entries, represented as a 32-bit unsigned int. Turn on any combination of bits 1-30 to check for entries by friends in the respective friend groups. Turn on bit 0, or leave the mask off entirely, to check for entries by any friends."
+    }
+  }
+}

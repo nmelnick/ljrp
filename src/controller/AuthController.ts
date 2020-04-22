@@ -11,6 +11,8 @@ import { LiveJournal } from "../service/LiveJournal";
 import { DtoFactory } from "../dto/DtoFactory";
 import { Session } from "inspector";
 import { SessionRepository } from "../repository/SessionRepository";
+import { errorResponse } from "../dto/ErrorResponse";
+import { Logger } from "@overnightjs/logger";
 
 @Controller("auth")
 @ClassMiddleware([requestLogger])
@@ -30,22 +32,21 @@ export class AuthController {
     @Middleware([temporaryAuthorization, validators.authRequest()])
     public async auth(req: Request, res: Response): Promise<Response> {
         const authRequest: AuthRequest = req.body;
-        const session = await this.sessionRepository.createWithAuth(req["apiApplication"].appId, authRequest.username, authRequest.password);
+        const app = req["context"].app;
+        const session = await this.sessionRepository.createWithAuth(app.appId, authRequest.username, authRequest.password);
         const lj = session.lj;
         const request = DtoFactory.loginRequest(
             await lj.generateBaseRequest(),
             authRequest
         );
         try {
-            const response = await lj.login(request);
-            return res.status(OK).send(DtoFactory.authResponse(response));
+            const response = DtoFactory.authResponse(await lj.login(request));
+            response.jwt = app.signJwt(session.sessionId);
+            return res.status(OK).send(response);
         } catch (e) {
             console.log("Error from login call", e);
             await this.sessionRepository.delete(session);
-            const authResponse = {
-                error: e.faultString
-            };
-            return res.status(BAD_REQUEST).send(authResponse);
+            return res.status(BAD_REQUEST).send(errorResponse(e.faultString));
         }
     }
 }

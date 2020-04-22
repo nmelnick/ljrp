@@ -6,6 +6,7 @@ import { AuthController } from "./controller/AuthController";
 import { UpController } from "./controller/UpController";
 import { Connection } from "typeorm";
 import { injectConnection } from "./middleware/ConnectionInjector";
+import { FriendsController } from "./controller/FriendsController";
 
 const inflector = require("json-inflector");
 
@@ -31,6 +32,12 @@ export class LJRPServer extends Server {
     private setupControllers(connection: Connection): void {
         const upController = new UpController(connection);
         const authController = new AuthController(connection);
-        super.addControllers([upController, authController, promiseRouter], null, injectConnection(connection));
+        const friendsController = new FriendsController(connection);
+        super.addControllers([
+            upController,
+            authController,
+            friendsController,
+            promiseRouter
+        ], null, injectConnection(connection));
     }
 }
