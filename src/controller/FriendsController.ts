@@ -29,7 +29,7 @@ export class FriendsController {
     @Middleware([session, validators.friendsCheckRequest()])
     public async check(req: Request, res: Response): Promise<Response> {
         const friendsCheckRequest: FriendsCheckRequest = req.body;
-        const session = req["context"].session;
+        const session = req.context.session;
         const lj = session.lj;
         const request = DtoFactory.checkFriendsRequest(
             await lj.generateBaseRequest(),

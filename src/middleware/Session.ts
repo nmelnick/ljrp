@@ -23,7 +23,7 @@ export function session(req: Request, res: Response, next: NextFunction) {
                     if (app) {
                         return jwt.verify(authValue, app.apiKey);
                     } else {
-                        Logger.Info(`${req["id"]} App ${appId} failed JWT verification`);
+                        Logger.Info(`${req.id} App ${appId} failed JWT verification`);
                     }
                 })
                 .then((decoded) => {
@@ -35,12 +35,12 @@ export function session(req: Request, res: Response, next: NextFunction) {
                 })
                 .then((session: Session) => {
                     if (session && session.appId == appId) {
-                        req["context"] = req["context"] || {};
-                        req["context"]["session"] = session;
-                        Logger.Info(`${req["id"]} App ${appId} Session ${session.sessionId} authenticated`);
+                        req.context = req.context || {};
+                        req.context.session = session;
+                        Logger.Info(`${req.id} App ${appId} Session ${session.sessionId} authenticated`);
                         next();
                     } else {
-                        Logger.Info(`${req["id"]} App ${appId} Session ${session.sessionId} failed`);
+                        Logger.Info(`${req.id} App ${appId} Session ${session.sessionId} failed`);
                         throw new Error("Invalid authorization");
                     }
                 })

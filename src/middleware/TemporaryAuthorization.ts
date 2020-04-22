@@ -16,8 +16,8 @@ export function temporaryAuthorization(req: Request, res: Response, next: NextFu
                 .findOne(authValue)
                 .then(app => {
                     if (app) {
-                        req["context"] = req["context"] || {};
-                        req["context"]["app"] = app;
+                        req.context = req.context || {};
+                        req.context.app = app;
                         next();
                     } else {
                         throw new Error("Invalid authorization");
