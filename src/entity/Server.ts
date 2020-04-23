@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+import { Profile } from "./Profile";
 
 @Entity()
 export class Server {
@@ -13,4 +14,8 @@ export class Server {
 
     @CreateDateColumn()
     public dateCreated: Date;
+    
+    @OneToOne(type => Profile, p => p.profileId)
+    @JoinColumn({ name: 'profile_id' })
+    public profile: Profile;
 }

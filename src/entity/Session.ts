@@ -1,10 +1,12 @@
 import * as crypto from "crypto";
-import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryColumn, ValueTransformer } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, ValueTransformer, BeforeUpdate } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 import { config } from "../Config";
 import { SessionData } from "../dto/SessionData";
 import { BaseLiveJournal } from "../service/BaseLiveJournal";
 import { Loader } from "../service/Loader";
+import { App } from "./App";
+import { Server } from "./Server";
 
 class SessionDataTransformer implements ValueTransformer {
     from(value: string): SessionData {
@@ -50,22 +52,30 @@ export class Session {
     @Column({ type: String, transformer: new SessionDataTransformer() })
     public sessionData: SessionData;
 
-    @CreateDateColumn()
+    @Column()
     public dateCreated: Date;
 
     @Column()
     public dateExpires: Date;
+    
+    @OneToOne(type => App, a => a.appId)
+    @JoinColumn({ name: 'app_id' })
+    public app: App;
+    
+    @OneToOne(type => Server, s => s.serverId)
+    @JoinColumn({ name: 'server_id' })
+    public server: Server;
 
     @BeforeInsert()
-    public generateUuid(): void {
+    public beforeInsert(): void {
         this.sessionId = uuidv4();
+        this.dateCreated = new Date();
     }
 
     public get lj(): BaseLiveJournal {
         if (!this._lj) {
             const profile = "LiveJournal";
-            const server = "http://www.livejournal.com/interface/xmlrpc";
-            this._lj = Loader.load(profile, server, this.sessionData.username, this.sessionData.hashed);
+            this._lj = Loader.load(profile, this.server.baseUrl, this.sessionData.username, this.sessionData.hashed);
         }
         return this._lj;
     }

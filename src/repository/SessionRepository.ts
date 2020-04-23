@@ -4,7 +4,7 @@ import { Session } from "../entity/Session";
 
 @EntityRepository(Session)
 export class SessionRepository extends Repository<Session> {
-    public async createWithAuth(appId: string, username: string, password: string): Promise<Session> {
+    public async createWithAuth(appId: string, server: string, username: string, password: string): Promise<Session> {
         const session = new Session();
         session.appId = appId;
         session.serverId = 1;
@@ -12,6 +12,10 @@ export class SessionRepository extends Repository<Session> {
             username: username,
             hashed: createHash('md5').update(password).digest("hex")
         };
-        return this.save(session);
+        return this
+            .save(session)
+            .then((s) => {
+                return this.findOne(s.sessionId, { relations: ["app", "server"] });
+            });
     }
 }

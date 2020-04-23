@@ -30,16 +30,17 @@ export function session(req: Request, res: Response, next: NextFunction) {
                 .then((decoded) => {
                     return connection
                         .getCustomRepository(SessionRepository)
-                        .findOne(decoded["sid"]);
+                        .findOne(decoded["sid"], { relations: ["app", "server"] });
                 })
                 .then((session: Session) => {
                     if (session && session.appId == appId) {
                         req.context = req.context || {};
                         req.context.session = session;
-                        Logger.Info(`${req.id} App ${appId} Session ${session.sessionId} authenticated`);
+                        req.context.app = session.app;
+                        Logger.Info(`${req.id} App ${req.context.app.appId} Session ${req.context.session.sessionId} authenticated`);
                         next();
                     } else {
-                        Logger.Info(`${req.id} App ${appId} Session ${session.sessionId} failed`);
+                        Logger.Info(`${req.id} App ${req.context.app.appId} Session ${req.context.session.sessionId} failed`);
                         throw new Error("Invalid authorization");
                     }
                 })

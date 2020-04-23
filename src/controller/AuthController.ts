@@ -19,7 +19,7 @@ export class AuthController extends AbstractConnectionController {
     public async auth(req: Request, res: Response): Promise<Response> {
         const authRequest: AuthRequest = req.body;
         const app = req.context.app;
-        const session = await this.sessionRepository.createWithAuth(app.appId, authRequest.username, authRequest.password);
+        const session = await this.sessionRepository.createWithAuth(app.appId, authRequest.server, authRequest.username, authRequest.password);
         const lj = session.lj;
         const request = DtoFactory.loginRequest(
             await lj.generateBaseRequest(),

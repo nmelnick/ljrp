@@ -15,6 +15,10 @@ export interface AuthRequest {
    */
   password: string;
   /**
+   * Server profile to authenticate against. This enum will be replaced by an API call in the future.
+   */
+  server?: "LiveJournal";
+  /**
    * If your client supports moods, send this key with a value of the highest mood ID you have cached/stored on the user's computer. For example, if you logged in last time with and got mood IDs 1, 2, 4, and 5, then send '5' as the value. The server will return every new mood that has an internal MoodID greater than 5. If you've never downloaded moods before, send '0'. If you don't care about getting any moods at all (if your client doesn't support them), then don't send this key at all.
    */
   last_mood_id?: number;
