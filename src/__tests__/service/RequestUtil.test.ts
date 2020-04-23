@@ -1,6 +1,6 @@
-import * as RequestUtil from "../../service/RequestUtil";
-import { BaseLiveJournal } from "../../service/BaseLiveJournal";
 import { ChallengeResponse } from "../../dto/lj/ChallengeResponse";
+import { BaseLiveJournal } from "../../service/BaseLiveJournal";
+import * as RequestUtil from "../../service/RequestUtil";
 
 class TestLiveJournal extends BaseLiveJournal {
     protected getUrl(): string {
