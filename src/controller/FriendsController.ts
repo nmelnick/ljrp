@@ -10,30 +10,19 @@ import { errorResponse } from "../dto/ErrorResponse";
 import { FriendsCheckRequest } from "../dto/FriendsCheckRequest";
 import { SessionRepository } from "../repository/SessionRepository";
 import { validators } from "../Schema";
+import { AbstractConnectionController } from "./AbstractConnectionController";
 
 @Controller("friends")
 @ClassMiddleware([requestLogger])
 @ClassErrorMiddleware(apiError)
-export class FriendsController {
-    private connection: Connection;
-
-    private get sessionRepository(): SessionRepository {
-        return this.connection.getCustomRepository(SessionRepository);
-    }
-
-    constructor(connection: Connection) {
-        this.connection = connection;
-    }
-
+export class FriendsController extends AbstractConnectionController {
     @Get('check')
     @Middleware([session, validators.friendsCheckRequest()])
     public async check(req: Request, res: Response): Promise<Response> {
-        const friendsCheckRequest: FriendsCheckRequest = req.body;
-        const session = req.context.session;
-        const lj = session.lj;
+        const lj = req.context.session.lj;
         const request = DtoFactory.checkFriendsRequest(
             await lj.generateBaseRequest(),
-            friendsCheckRequest
+            req.body
         );
         try {
             const response = await lj.checkFriends(request);

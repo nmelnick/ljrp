@@ -13,21 +13,12 @@ import { Session } from "inspector";
 import { SessionRepository } from "../repository/SessionRepository";
 import { errorResponse } from "../dto/ErrorResponse";
 import { Logger } from "@overnightjs/logger";
+import { AbstractConnectionController } from "./AbstractConnectionController";
 
 @Controller("auth")
 @ClassMiddleware([requestLogger])
 @ClassErrorMiddleware(apiError)
-export class AuthController {
-    private connection: Connection;
-
-    private get sessionRepository(): SessionRepository {
-        return this.connection.getCustomRepository(SessionRepository);
-    }
-
-    constructor(connection: Connection) {
-        this.connection = connection;
-    }
-
+export class AuthController extends AbstractConnectionController {
     @Post()
     @Middleware([temporaryAuthorization, validators.authRequest()])
     public async auth(req: Request, res: Response): Promise<Response> {
