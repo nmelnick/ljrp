@@ -24,14 +24,13 @@ export function session(req: Request, res: Response, next: NextFunction) {
                         return jwt.verify(authValue, app.apiKey);
                     } else {
                         Logger.Info(`${req.id} App ${appId} failed JWT verification`);
+                        throw new Error("Invalid authorization");
                     }
                 })
                 .then((decoded) => {
-                    if (decoded) {
-                        return connection
-                            .getCustomRepository(SessionRepository)
-                            .findOne(decoded["sid"]);
-                    }
+                    return connection
+                        .getCustomRepository(SessionRepository)
+                        .findOne(decoded["sid"]);
                 })
                 .then((session: Session) => {
                     if (session && session.appId == appId) {

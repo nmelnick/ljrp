@@ -19,6 +19,13 @@
     "total": {
       "type": "number",
       "description": "The total number of items that have been updated since the time specified"
+    },
+    "errors": {
+      "type": "array",
+      "description": "Error message(s), if failed",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }

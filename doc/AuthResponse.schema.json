@@ -47,9 +47,12 @@
         "$ref": "#/definitions/Mood"
       }
     },
-    "error": {
-      "type": "string",
-      "description": "Error message, if failed"
+    "errors": {
+      "type": "array",
+      "description": "Error message(s), if failed",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "definitions": {

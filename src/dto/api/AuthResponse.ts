@@ -35,9 +35,9 @@ export interface AuthResponse {
    */
   moods?: Mood[];
   /**
-   * Error message, if failed
+   * Error message(s), if failed
    */
-  error?: string;
+  errors?: string[];
   [k: string]: any;
 }
 export interface FriendGroup {

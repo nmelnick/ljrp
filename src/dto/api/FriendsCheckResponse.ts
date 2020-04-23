@@ -22,5 +22,9 @@ export interface FriendsCheckResponse {
    * The total number of items that have been updated since the time specified
    */
   total?: number;
+  /**
+   * Error message(s), if failed
+   */
+  errors?: string[];
   [k: string]: any;
 }
