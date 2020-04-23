@@ -1,12 +1,12 @@
-import { AuthRequest } from "./AuthRequest";
-import { LoginRequest } from "./lj/LoginRequest";
-import { BaseRequest } from "./lj/IBaseRequest";
-import { LoginResponse } from "./lj/LoginResponse";
-import { AuthResponse } from "./AuthResponse";
-import { FriendsCheckRequest } from "./FriendsCheckRequest";
+import { AuthRequest } from "./api/AuthRequest";
+import { AuthResponse } from "./api/AuthResponse";
+import { FriendsCheckRequest } from "./api/FriendsCheckRequest";
+import { FriendsCheckResponse } from "./api/FriendsCheckResponse";
 import { CheckFriendsRequest } from "./lj/CheckFriendsRequest";
 import { CheckFriendsResponse } from "./lj/CheckFriendsResponse";
-import { FriendsCheckResponse } from "./FriendsCheckResponse";
+import { BaseRequest } from "./lj/IBaseRequest";
+import { LoginRequest } from "./lj/LoginRequest";
+import { LoginResponse } from "./lj/LoginResponse";
 
 export class DtoFactory {
     public static loginRequest(baseRequest: BaseRequest, authRequest: AuthRequest): LoginRequest {

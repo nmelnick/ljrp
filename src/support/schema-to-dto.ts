@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const schemaPath = path.resolve(path.join(__dirname, "..", "..", "doc"));
-const dtoPath = path.resolve(path.join(__dirname, "..", "..", "src", "dto"));
+const dtoPath = path.resolve(path.join(__dirname, "..", "..", "src", "dto", "api"));
 console.log("Reading from " + schemaPath);
 console.log("Writing to " + dtoPath);
 

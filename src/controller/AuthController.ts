@@ -1,18 +1,13 @@
-import { Controller, Post, ClassMiddleware, ClassErrorMiddleware, Middleware } from "@overnightjs/core";
+import { ClassErrorMiddleware, ClassMiddleware, Controller, Middleware, Post } from "@overnightjs/core";
 import { Request, Response } from "express";
-import { OK, BAD_REQUEST } from "http-status-codes";
+import { BAD_REQUEST, OK } from "http-status-codes";
+import { AuthRequest } from "../dto/api/AuthRequest";
+import { errorResponse } from "../dto/api/ErrorResponse";
+import { DtoFactory } from "../dto/DtoFactory";
 import { apiError } from "../middleware/ApiError";
 import { requestLogger } from "../middleware/RequestLogger";
-import { Connection } from "typeorm";
-import { AuthRequest } from "../dto/AuthRequest";
-import { validators } from "../Schema";
 import { temporaryAuthorization } from "../middleware/TemporaryAuthorization";
-import { LiveJournal } from "../service/LiveJournal";
-import { DtoFactory } from "../dto/DtoFactory";
-import { Session } from "inspector";
-import { SessionRepository } from "../repository/SessionRepository";
-import { errorResponse } from "../dto/ErrorResponse";
-import { Logger } from "@overnightjs/logger";
+import { validators } from "../Schema";
 import { AbstractConnectionController } from "./AbstractConnectionController";
 
 @Controller("auth")

@@ -1,14 +1,11 @@
-import { Controller, ClassMiddleware, ClassErrorMiddleware, Middleware, Get } from "@overnightjs/core";
-import { OK, BAD_REQUEST } from "http-status-codes";
+import { ClassErrorMiddleware, ClassMiddleware, Controller, Get, Middleware } from "@overnightjs/core";
 import { Request, Response } from "express";
-import { Connection } from "typeorm";
+import { BAD_REQUEST, OK } from "http-status-codes";
+import { errorResponse } from "../dto/api/ErrorResponse";
+import { DtoFactory } from "../dto/DtoFactory";
 import { apiError } from "../middleware/ApiError";
 import { requestLogger } from "../middleware/RequestLogger";
 import { session } from "../middleware/Session";
-import { DtoFactory } from "../dto/DtoFactory";
-import { errorResponse } from "../dto/ErrorResponse";
-import { FriendsCheckRequest } from "../dto/FriendsCheckRequest";
-import { SessionRepository } from "../repository/SessionRepository";
 import { validators } from "../Schema";
 import { AbstractConnectionController } from "./AbstractConnectionController";
 
