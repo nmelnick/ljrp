@@ -1,5 +1,5 @@
 import * as crypto from "crypto";
-import {Column, Entity, PrimaryColumn, CreateDateColumn, ValueTransformer, BeforeInsert} from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryColumn, ValueTransformer } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 import { config } from "../Config";
 import { SessionData } from "../dto/SessionData";

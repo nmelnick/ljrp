@@ -1,9 +1,9 @@
 import "reflect-metadata";
+import { Logger } from "@overnightjs/logger";
 import { createConnection, getConnectionOptions } from "typeorm";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { config } from "./Config";
 import { LJRPServer } from "./LJRPServer";
-import { Logger } from "@overnightjs/logger";
 
 getConnectionOptions().then((connectionOptions) => {
     createConnection(Object.assign(connectionOptions, {

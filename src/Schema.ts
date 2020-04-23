@@ -1,6 +1,6 @@
+import { Validator } from "express-json-validator-middleware";
 import * as fs from "fs";
 import * as path from 'path';
-import { Validator } from "express-json-validator-middleware";
 
 const validator = new Validator({});
 const schemaPath = path.resolve(path.join(__dirname, "..", "doc"));

@@ -1,11 +1,11 @@
 import * as xmlrpc from "xmlrpc";
 import { ChallengeResponse } from "../dto/lj/ChallengeResponse";
-import { LoginRequest } from "../dto/lj/LoginRequest";
-import { LoginResponse } from "../dto/lj/LoginResponse";
-import { BaseRequest } from "../dto/lj/IBaseRequest";
-import * as RequestUtil from "./RequestUtil";
 import { CheckFriendsRequest } from "../dto/lj/CheckFriendsRequest";
 import { CheckFriendsResponse } from "../dto/lj/CheckFriendsResponse";
+import { BaseRequest } from "../dto/lj/IBaseRequest";
+import { LoginRequest } from "../dto/lj/LoginRequest";
+import { LoginResponse } from "../dto/lj/LoginResponse";
+import * as RequestUtil from "./RequestUtil";
 
 export abstract class BaseLiveJournal {
     protected username: string;

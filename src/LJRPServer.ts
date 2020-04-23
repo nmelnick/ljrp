@@ -2,11 +2,11 @@ import { Server } from "@overnightjs/core";
 import { Logger } from "@overnightjs/logger";
 import * as bodyParser from "body-parser";
 import * as promiseRouter from "express-promise-router";
-import { AuthController } from "./controller/AuthController";
-import { UpController } from "./controller/UpController";
 import { Connection } from "typeorm";
-import { injectConnection } from "./middleware/ConnectionInjector";
+import { AuthController } from "./controller/AuthController";
 import { FriendsController } from "./controller/FriendsController";
+import { UpController } from "./controller/UpController";
+import { injectConnection } from "./middleware/ConnectionInjector";
 
 const inflector = require("json-inflector");
 

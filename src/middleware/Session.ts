@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Logger } from "@overnightjs/logger";
+import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { Connection } from "typeorm";
-import { SessionRepository } from "../repository/SessionRepository";
 import { App } from "../entity/App";
 import { Session } from "../entity/Session";
-import { Logger } from "@overnightjs/logger";
+import { SessionRepository } from "../repository/SessionRepository";
 
 /**
  * Middleware to allow temporary authorization using an ID. 

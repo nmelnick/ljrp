@@ -1,9 +1,8 @@
 import { createHash } from "crypto";
-
-import { IWithRequired } from "../dto/lj/IWithRequired";
-import { IWithChallenge } from "../dto/lj/IWithChallenge";
-import { BaseLiveJournal } from "./BaseLiveJournal";
 import { BaseRequest } from "../dto/lj/IBaseRequest";
+import { IWithChallenge } from "../dto/lj/IWithChallenge";
+import { IWithRequired } from "../dto/lj/IWithRequired";
+import { BaseLiveJournal } from "./BaseLiveJournal";
 
 /**
  * Generate the base request for most XML-RPC calls, to be built upon for

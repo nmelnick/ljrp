@@ -1,5 +1,5 @@
-import {Column, Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn} from "typeorm";
 import * as jwt from "jsonwebtoken";
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class App {

@@ -1,7 +1,7 @@
-import { Request, NextFunction, Response } from "express";
-import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "http-status-codes";
-import { ValidationError } from "express-json-validator-middleware";
 import { ErrorObject } from "ajv";
+import { NextFunction, Request, Response } from "express";
+import { ValidationError } from "express-json-validator-middleware";
+import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "http-status-codes";
 
 /**
  * An ErrorMiddleware to convert an error string or Error object into a JSON
