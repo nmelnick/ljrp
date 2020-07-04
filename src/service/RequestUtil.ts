@@ -12,7 +12,11 @@ import { BaseLiveJournal } from "./BaseLiveJournal";
  */
 export async function generateBaseRequest(username: string, hashedPassword: string, lj: BaseLiveJournal): Promise<BaseRequest> {
     const challenge = await generateChallenge(username, hashedPassword, lj);
-    return {username: username, ...generateRequiredRequest(), ...challenge};
+    return {
+        username: username,
+        ...generateRequiredRequest(),
+        ...challenge
+    };
 }
 
 function generateRequiredRequest(): IWithRequired {

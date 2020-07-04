@@ -13,6 +13,23 @@ import { AbstractConnectionController } from "./AbstractConnectionController";
 @ClassMiddleware([requestLogger])
 @ClassErrorMiddleware(apiError)
 export class FriendsController extends AbstractConnectionController {
+    @Get()
+    @Middleware([session, validators.friendsCheckRequest()])
+    public async getFriends(req: Request, res: Response): Promise<Response> {
+        const lj = req.context.session.lj;
+        const request = DtoFactory.getFriendsRequest(
+            await lj.generateBaseRequest(),
+            req.body
+        );
+        try {
+            const response = await lj.getFriends(request);
+            return res.status(OK).send(DtoFactory.friendsGetResponse(response));
+        } catch (e) {
+            console.log("Error from getfriends call", e);
+            return res.status(BAD_REQUEST).send(errorResponse(e.faultString));
+        }
+    }
+
     @Get('check')
     @Middleware([session, validators.friendsCheckRequest()])
     public async check(req: Request, res: Response): Promise<Response> {

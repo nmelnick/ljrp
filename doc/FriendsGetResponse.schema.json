@@ -1,0 +1,30 @@
+{
+  "$id": "https://github.com/nmelnick/ljrp/doc/FriendsGetResponse.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FriendsGetResponse",
+  "type": "object",
+  "required": ["friends"],
+  "properties": {
+    "friend_groups": {
+      "type": "array",
+      "description": "List of available friend groups, if include_groups was in the request",
+      "items": {
+        "$ref": "FriendGroup.schema.json"
+      }
+    },
+    "friend_ofs": {
+      "type": "array",
+      "description": "List of users that list this user as a friend, if include_friend_of was in the request",
+      "items": {
+        "$ref": "Friend.schema.json"
+      }
+    },
+    "friends": {
+      "type": "array",
+      "description": "List of users that this user lists as a friend",
+      "items": {
+        "$ref": "Friend.schema.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+    "$id": "https://github.com/nmelnick/ljrp/doc/FriendGroup.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "FriendGroup",
+    "type": "object",
+    "required": ["id", "name", "sortorder", "public"],
+    "properties": {
+      "id": {
+        "type": "number",
+        "description": "The bit number of this friend group, from 1-30",
+        "minimum": 1,
+        "maximum": 30
+      },
+      "name": {
+        "type": "string",
+        "description": "Name of this friend group"
+      },
+      "sortorder": {
+        "type": "number",
+        "description": "The sort order of this friend group, from 0-255",
+        "minimum": 0,
+        "maximum": 255
+      },
+      "public": {
+        "type": "boolean",
+        "description": "If this friend group is public"
+      }
+    }
+  }
+  

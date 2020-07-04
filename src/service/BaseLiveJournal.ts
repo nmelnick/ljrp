@@ -6,6 +6,8 @@ import { BaseRequest } from "../dto/lj/IBaseRequest";
 import { LoginRequest } from "../dto/lj/LoginRequest";
 import { LoginResponse } from "../dto/lj/LoginResponse";
 import * as RequestUtil from "./RequestUtil";
+import { GetFriendsRequest } from "../dto/lj/GetFriendsRequest";
+import { GetFriendsResponse } from "../dto/lj/GetFriendsResponse";
 
 export abstract class BaseLiveJournal {
     protected username: string;
@@ -85,6 +87,23 @@ export abstract class BaseLiveJournal {
      */
     public async checkFriends(request: CheckFriendsRequest): Promise<CheckFriendsResponse> {
         return await this.methodCall("checkfriends", [request]);
+    }
+
+    /**
+     * Returns a list of which other LiveJournal users this user lists as their
+     * friend.
+     * 
+     * Returns a verbose list of information on friends a user has listed.
+     * Optionally able to include their Friends-of list, the friends group
+     * associated with each user, and a limit on the number of friends to
+     * return. 
+     * 
+     * https://www.livejournal.com/doc/server/ljp.csp.xml-rpc.getfriends.html
+     * 
+     * @param request A [[GetFriendsRequest]] instance
+     */
+    public async getFriends(request: GetFriendsRequest): Promise<GetFriendsResponse> {
+        return await this.methodCall("getfriends", [request]);
     }
 
     /**
